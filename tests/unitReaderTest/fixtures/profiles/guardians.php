@@ -16,6 +16,7 @@ $weapon = new Weapon(
 );
 
 $unit = new Unit(
+    "guardians",
     [
         new Model(3, 5, 1, [$weapon], []),
         new Model(3, 5, 1, [$weapon], []),

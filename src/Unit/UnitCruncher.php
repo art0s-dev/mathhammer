@@ -7,7 +7,7 @@ namespace Art0s\Mathhammer\Unit;
 final class UnitCruncher
 {
     private Unit $profileUnit;
-    private Model $targetModel;
+    private Unit $targetUnit;
     private bool $shooting = true;
 
     private static array $probability = [
@@ -31,15 +31,15 @@ final class UnitCruncher
         $this->profileUnit = $profileUnit;
     }
 
-    public function setTargetModel(Model $targetUnit): void
+    public function setTargetModel(Unit $targetUnit): void
     {
-        $this->targetModel = $targetUnit;
+        $this->targetUnit = $targetUnit;
     }
 
     public function calculatePointsPerWound(): float
     {
         $unit = $this->profileUnit->models;
-        $target = $this->targetModel;
+        $target = $this->targetUnit->models[0];
         $points = $this->profileUnit->points;
         $wounds = 0;
 

@@ -10,12 +10,12 @@ use Art0s\Mathhammer\Unit\UnitCruncher;
 
 it('Can crunch a unit', function () {
 
-   $eldarGuardians= new Unit(createGuardians(), 115);
+   $eldarGuardians= new Unit("guardians", createGuardians(), 115);
 
-   $guardEquivalent = new Model(
-       3,
-       5,
-       1
+   $guardEquivalent = new Unit(
+         "Guard Equivalent",
+         [new Model(3, 5, 1)],
+         0
    );
 
     $unitCruncher = new UnitCruncher();
