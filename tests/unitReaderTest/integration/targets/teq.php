@@ -6,7 +6,7 @@ use Art0s\Mathhammer\Unit\Model;
 use Art0s\Mathhammer\Unit\Unit;
 
 $unit = new Unit(
-    "Tank Equivalent",
-    [new Model(10, 3, 12)],
+    "Guard Equivalent",
+    [new Model(3, 5, 1)],
     0
 );
