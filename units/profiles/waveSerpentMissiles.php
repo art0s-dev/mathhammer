@@ -1,16 +1,18 @@
 <?php
 
+
 use Art0s\Mathhammer\Unit\Model;
 use Art0s\Mathhammer\Unit\Unit;
 use Art0s\Mathhammer\Unit\Weapon;
 
-$prismCannon = new Weapon(
-    "Prism Cannon",
+
+$missile = new Weapon(
+    "Missile Launcher",
     3,
+    1,
+    10,
     2,
-    18,
-    4,
-    6
+    2.5
 );
 
 $shurikenCannon = new Weapon(
@@ -23,9 +25,9 @@ $shurikenCannon = new Weapon(
 );
 
 $unit = new Unit(
-    "Fire Prism",
+    "Wave Serpent w/Missile Launcher",
     [
-        new Model(3, 5, 1, [$prismCannon, $shurikenCannon], []),
+        new Model(3, 5, 1, [$missile, $missile, $shurikenCannon], []),
     ],
-    125
+    120
 );

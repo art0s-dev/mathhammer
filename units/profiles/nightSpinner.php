@@ -5,12 +5,12 @@ use Art0s\Mathhammer\Unit\Unit;
 use Art0s\Mathhammer\Unit\Weapon;
 
 $prismCannon = new Weapon(
-    "Prism Cannon",
+    "Doomweaver",
     3,
-    2,
-    18,
-    4,
-    6
+    5.5,
+    7,
+    0,
+    2
 );
 
 $shurikenCannon = new Weapon(
@@ -23,9 +23,9 @@ $shurikenCannon = new Weapon(
 );
 
 $unit = new Unit(
-    "Fire Prism",
+    "Night Spinner",
     [
         new Model(3, 5, 1, [$prismCannon, $shurikenCannon], []),
     ],
-    125
+    140
 );
