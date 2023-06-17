@@ -65,31 +65,44 @@ $reader = new SheetReader($pathToUnits);
                 var table = document.querySelector('.table');
                 var rows = table.getElementsByTagName('tr');
 
+                var unitsCount = rows.length - 1;
+                var targetsCount = rows[1].getElementsByTagName('td').length - 1;
+
+                var unitMinValues = new Array(unitsCount).fill(Number.MAX_VALUE);
+                var unitMaxValues = new Array(unitsCount).fill(Number.MIN_VALUE);
+
+                var targetMinValues = new Array(targetsCount).fill(Number.MAX_VALUE);
+                var targetMaxValues = new Array(targetsCount).fill(Number.MIN_VALUE);
+
                 for (var i = 1; i < rows.length; i++) {
                     var cells = rows[i].getElementsByTagName('td');
-                    var values = [];
 
                     for (var j = 0; j < cells.length; j++) {
                         var value = parseFloat(cells[j].textContent);
 
                         if (!isNaN(value)) {
-                            values.push(value);
+                            unitMinValues[i - 1] = Math.min(unitMinValues[i - 1], value);
+                            unitMaxValues[i - 1] = Math.max(unitMaxValues[i - 1], value);
+
+                            targetMinValues[j] = Math.min(targetMinValues[j], value);
+                            targetMaxValues[j] = Math.max(targetMaxValues[j], value);
                         }
                     }
+                }
 
-                    var min = Math.min.apply(null, values);
-                    var max = Math.max.apply(null, values);
+                for (var i = 1; i < rows.length; i++) {
+                    var cells = rows[i].getElementsByTagName('td');
 
-                    for (var k = 0; k < cells.length; k++) {
-                        var cellValue = parseFloat(cells[k].textContent);
+                    for (var j = 0; j < cells.length; j++) {
+                        var cellValue = parseFloat(cells[j].textContent);
 
                         if (!isNaN(cellValue)) {
-                            if (cellValue === min) {
-                                cells[k].style.backgroundColor = 'green';
-                            } else if (cellValue === max) {
-                                cells[k].style.backgroundColor = 'red';
+                            if (cellValue === unitMinValues[i - 1] || cellValue === targetMinValues[j]) {
+                                cells[j].style.backgroundColor = 'green';
+                            } else if (cellValue === unitMaxValues[i - 1] || cellValue === targetMaxValues[j]) {
+                                cells[j].style.backgroundColor = 'red';
                             } else {
-                                cells[k].style.backgroundColor = 'yellow';
+                                cells[j].style.backgroundColor = 'yellow';
                             }
                         }
                     }

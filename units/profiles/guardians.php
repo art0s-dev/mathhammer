@@ -16,7 +16,7 @@ $weapon = new Weapon(
 );
 
 $unit = new Unit(
-    "guardians w/ shuriken pistol",
+    "Guardians w/ shuriken pistol",
     [
         new Model(3, 5, 1, [$weapon], []),
         new Model(3, 5, 1, [$weapon], []),
