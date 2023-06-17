@@ -33,7 +33,9 @@ $reader = new SheetReader($pathToUnits);
             <tr>
                 <th scope="col">&nbsp;</th>
                 <?php foreach($reader->getTargets() as $target): ?>
-                    <th scope="col"><?php echo $target->name; ?></th>
+                    <th data-target-key="<?php echo $target->name; ?>" scope="col">
+                        <?php echo $target->name; ?>
+                    </th>
                 <?php endforeach; ?>
             </tr>
             </thead>
@@ -48,7 +50,9 @@ $reader = new SheetReader($pathToUnits);
                     </th>
                     <?php foreach($reader->getTargets() as $target): ?>
                         <?php $unitCruncer->setTargetModel($target); ?>
-                        <td><?php echo $unitCruncer->calculatePointsPerWound(); ?></td>
+                        <td data-target="<?php echo $target->name; ?>">
+                            <?php echo $unitCruncer->calculatePointsPerWound(); ?>
+                        </td>
                     <?php endforeach; ?>
                 </tr>
             <?php endforeach; ?>
@@ -56,66 +60,62 @@ $reader = new SheetReader($pathToUnits);
         </table>
 
         <script>
-            //write a function that searches every unit and make the td of
-            //the lowest value green
-            //the highest value red
-            //the rest yellow
 
-            function highlightValues() {
-                var table = document.querySelector('.table');
-                var rows = table.getElementsByTagName('tr');
-
-                var unitsCount = rows.length - 1;
-                var targetsCount = rows[1].getElementsByTagName('td').length - 1;
-
-                var unitMinValues = new Array(unitsCount).fill(Number.MAX_VALUE);
-                var unitMaxValues = new Array(unitsCount).fill(Number.MIN_VALUE);
-
-                var targetMinValues = new Array(targetsCount).fill(Number.MAX_VALUE);
-                var targetMaxValues = new Array(targetsCount).fill(Number.MIN_VALUE);
-
-                for (var i = 1; i < rows.length; i++) {
-                    var cells = rows[i].getElementsByTagName('td');
-
-                    for (var j = 0; j < cells.length; j++) {
-                        var value = parseFloat(cells[j].textContent);
-
-                        if (!isNaN(value)) {
-                            unitMinValues[i - 1] = Math.min(unitMinValues[i - 1], value);
-                            unitMaxValues[i - 1] = Math.max(unitMaxValues[i - 1], value);
-
-                            targetMinValues[j] = Math.min(targetMinValues[j], value);
-                            targetMaxValues[j] = Math.max(targetMaxValues[j], value);
-                        }
-                    }
-                }
-
-                for (var i = 1; i < rows.length; i++) {
-                    var cells = rows[i].getElementsByTagName('td');
-
-                    for (var j = 0; j < cells.length; j++) {
-                        var cellValue = parseFloat(cells[j].textContent);
-
-                        if (!isNaN(cellValue)) {
-                            if (cellValue === unitMinValues[i - 1] || cellValue === targetMinValues[j]) {
-                                cells[j].style.backgroundColor = 'green';
-                            } else if (cellValue === unitMaxValues[i - 1] || cellValue === targetMaxValues[j]) {
-                                cells[j].style.backgroundColor = 'red';
-                            } else {
-                                cells[j].style.backgroundColor = 'yellow';
-                            }
-                        }
-                    }
-                }
-            }
-
-            window.onload = highlightValues;
         </script>
     </main>
 
-
-
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+    <script>
+        const units = $("tr")
+        units.each(function (){
+            const results = $(this).find("td")
+
+            const values = []
+            results.each(function(){
+                values.push(Number($(this).text()))
+            })
+
+            const min = Math.min.apply(null, values);
+            const max = Math.max.apply(null, values);
+
+            console.log(min, max)
+
+            results.each(function(){
+                const value = Number($(this).text())
+                if (value === min) {
+                    $(this).css('background-color', 'green');
+                } else if (value === max) {
+                    $(this).css('background-color', 'red');
+                } else {
+                    $(this).css('background-color', 'yellow');
+                }
+            })
+        })
+
+        const targets = $("th[data-target-key]")
+        targets.each(function (){
+            const targetKey = $(this).data('target-key')
+            const targetCells = $(`td[data-target="${targetKey}"]`)
+            const values = []
+            targetCells.each(function(){
+                values.push(Number($(this).text()))
+            })
+
+            const min = Math.min.apply(null, values);
+            const max = Math.max.apply(null, values);
+
+            targetCells.each(function(){
+                const value = Number($(this).text())
+                if (value === min) {
+                    $(this).css('background-color', 'green');
+                } else if (value === max) {
+                    $(this).css('background-color', 'red');
+                }
+            })
+        })
+    </script>
 </body>
 </html>
 
