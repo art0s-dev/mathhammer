@@ -1,0 +1,27 @@
+{
+    "name": "art0s/mathhammer",
+    "description": "A small eldari mathhammer project",
+    "type": "project",
+    "license": "GNU",
+    "autoload": {
+        "psr-4": {
+            "Art0s\\Mathhammer\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "me"
+        }
+    ],
+    "require-dev": {
+        "pestphp/pest": "^2.7"
+    },
+    "config": {
+        "allow-plugins": {
+            "pestphp/pest-plugin": true
+        }
+    },
+    "scripts": {
+        "test": "vendor/bin/pest"
+    }
+}
