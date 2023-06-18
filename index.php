@@ -71,26 +71,20 @@ $reader = new SheetReader($pathToUnits);
         const units = $("tr")
         units.each(function (){
             const results = $(this).find("td")
-
             const values = []
             results.each(function(){
                 values.push(Number($(this).text()))
             })
 
-            const min = Math.min.apply(null, values);
-            const max = Math.max.apply(null, values);
-
-            console.log(min, max)
+            const min = Math.min.apply(null, values)
+            const max = Math.max.apply(null, values)
 
             results.each(function(){
                 const value = Number($(this).text())
-                if (value === min) {
-                    $(this).css('background-color', 'green');
-                } else if (value === max) {
-                    $(this).css('background-color', 'red');
-                } else {
-                    $(this).css('background-color', 'yellow');
-                }
+                let color = 'yellow';
+                if (value === min) color = 'green';
+                if (value === max) color = 'red';
+                $(this).css("background", color)
             })
         })
 
@@ -103,16 +97,15 @@ $reader = new SheetReader($pathToUnits);
                 values.push(Number($(this).text()))
             })
 
-            const min = Math.min.apply(null, values);
-            const max = Math.max.apply(null, values);
+            const min = Math.min.apply(null, values)
+            const max = Math.max.apply(null, values)
 
             targetCells.each(function(){
                 const value = Number($(this).text())
-                if (value === min) {
-                    $(this).css('background-color', 'green');
-                } else if (value === max) {
-                    $(this).css('background-color', 'red');
-                }
+                let color
+                if (value === min) color = 'green'
+                if (value === max) color = 'red'
+                $(this).css('background', color)
             })
         })
     </script>
